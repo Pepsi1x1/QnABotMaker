@@ -65,12 +65,11 @@ fileprivate struct serviceHelpers {
         guard input.count > 0 else { return input }
         guard let encodedData = input.data(using: .utf8) else { return input }
         
-        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
-            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html.rawValue,
-            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
+        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
         
         do {
-            return try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil).string
+            let attributedString = try NSAttributedString(data: encodedData, options: options, documentAttributes: nil)
+            return attributedString.string
         } catch {
             print("Error: \(error)")
             return input
